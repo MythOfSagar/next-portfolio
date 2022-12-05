@@ -38,8 +38,8 @@ July 2015 - January 2020
 
 export async function getStaticProps(){
 
-  let resp=await fetch("http://localhost:8080/gitData")
-  let resp2=await fetch("http://localhost:8080/repoData")
+  let resp=await fetch("https://api.github.com/users/sagar1079")
+  let resp2=await fetch("https://api.github.com/search/repositories?q=user:sagar1079+fork:true&sort=updated&per_page=10&type=Repositories")
   let data =await resp.json()
   let data2=await resp2.json()
 
