@@ -1,5 +1,5 @@
 import React from 'react'
-import SingleProject from './singleProject'
+import SingleProject from '../component/singleProject'
 
 const Projects = ({project}) => {
 
@@ -26,3 +26,15 @@ const Projects = ({project}) => {
 
 export default Projects
 
+export async function getServerSideProps(){
+
+
+  let resp2=await fetch("https://api.github.com/search/repositories?q=user:sagar1079+fork:true&sort=updated&per_page=10&type=Repositories")
+  let data2 =await resp2.json()
+
+  return{
+    props:{
+      project:data2
+    }
+  }
+}
