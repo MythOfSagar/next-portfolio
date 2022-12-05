@@ -1,0 +1,51 @@
+name: sagar_portfolio
+
+on:
+push:
+
+pull_request:
+branches:
+-main
+
+jobs:
+build:
+name:Build
+runs-on: ubuntu-latest
+
+steps:
+  - name: checkout
+  uses:actions/checkout@v3
+
+  - name: Install node
+  uses:actions/setup-node@v3
+  with:
+  node-version:16.x
+
+  - name: npm install
+  run: npm i
+  - name: build project
+  run: npm run build
+
+  -name: Upload artifact
+  uses: actions/upload-artifact@v3
+  with:
+  name:production
+  path: ./out
+
+  deploy:
+    name:deploy
+    runs-on:ubuntu-latest
+    needs:build
+
+   steps:
+    -name: Download artifact
+  uses: actions/download-artifact@v3
+  with:
+  name:production
+  path: ./out
+
+   -name:Deploy
+   uses: peaceiris/actions-gh-pages@v3
+   with:
+   github_token: ${{secrets.TOKEN}}
+   publish_dir: ./out
